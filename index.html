@@ -1,0 +1,97 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day Activity and Health Services
+Daily Transportation Record</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header id="header" style="position:sticky;top:0">
+        <div class="div1">
+          <img src="images/logo.png">
+          <h2>Health Management Solutions</h2>
+        </div>
+        <div class="div2">
+        <ul>
+        <li><a href="index.html">Home </a></li>
+      
+        <li><a id="contactbtn" href="#">About Us</a></li>
+    </ul>
+    
+        </div>
+      </header>
+     <aside> 
+    <div>
+      <img src="images/logo.png" alt="" >
+  </div> 
+      <div onclick="openNav()" >
+          <div class="container" onclick="myFunction(this)" id="sideNav">
+              <div class="bar1"></div>
+              <div class="bar2"></div>
+              <div class="bar3"></div>
+            </div>
+          </div>
+  </aside>
+
+  <nav style="z-index: 1;">
+    <div id="mySidenav" class="sidenav">
+        <img src="images/logo.png" alt="">
+        <a href="index.html">Home</a>      
+      <a >About Us</a>
+    </div>
+    <script>
+    
+function myFunction(x) {
+    x.classList.toggle("change");
+  }
+
+  var open = false;
+
+function openNav() {
+    var sideNav = document.getElementById("mySidenav");
+    
+    if (sideNav.style.width === "0px" || sideNav.style.width === "") {
+        sideNav.style.width = "250px";
+        open = true;
+    } else {
+        sideNav.style.width = "0";
+        open = false;
+    }
+}
+    </script>
+</nav>
+<main>
+    <div id="enter">
+       <div>
+    <h1>Form for Entering Patient Names</h1>
+    <p>Fill in the form with the required details</p>
+</div>
+<div>
+    <form action="">
+        <label for="">First name</label><br>
+        <input type="text" name="firstName" placeholder="Patient first name"><br>
+        <label for="">Last name</label><br>
+        <input type="text" name="lastName" placeholder="Patient last name"><br><br>
+        <input type="submit" id="submit">
+    </form>
+</div> 
+    </div>
+
+
+    <div id="list">
+       <p> Patient Information</p>
+       <h2>List of All Patients</h2> 
+<div style="height: 350px;">
+
+</div>
+    </div>
+</main>
+
+<footer>
+   <p>© Business All Rights Reserved.</p> 
+</footer>
+
+
+</body>
+</html>
