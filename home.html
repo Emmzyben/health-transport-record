@@ -2,7 +2,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health Management Solutions</title>
+    <title>Day Activity and Health Services
+Daily Transportation Record</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,7 +13,11 @@
           <h2>Health Management Solutions</h2>
         </div>
         <div class="div2">
-        
+        <ul>
+        <li><a href="index.html">Home </a></li>
+      
+        <li><a id="contactbtn" href="#">About Us</a></li>
+    </ul>
     
         </div>
       </header>
@@ -21,15 +26,15 @@
       <img src="images/logo.png" alt="" >
   </div> 
       <div onclick="openNav()" >
-          <!-- <div class="container" onclick="myFunction(this)" id="sideNav">
+          <div class="container" onclick="myFunction(this)" id="sideNav">
               <div class="bar1"></div>
               <div class="bar2"></div>
               <div class="bar3"></div>
-            </div> -->
+            </div>
           </div>
   </aside>
 
-  <!-- <nav style="z-index: 1;">
+  <nav style="z-index: 1;">
     <div id="mySidenav" class="sidenav">
         <img src="images/logo.png" alt="">
         <a href="index.html">Home</a>      
@@ -55,41 +60,37 @@ function openNav() {
     }
 }
     </script>
-</nav> -->
+</nav>
 <main>
- 
+    <div id="enter">
+       <div>
+    <h1>Form for Entering Patient Names</h1>
+    <p>Fill in the form with the required details</p>
+</div>
+<div>
+    <form action="">
+        <label for="">First name</label><br>
+        <input type="text" name="firstName" placeholder="Patient first name"><br>
+        <label for="">Last name</label><br>
+        <input type="text" name="lastName" placeholder="Patient last name"><br><br>
+        <input type="submit" id="submit">
+    </form>
+</div> 
+    </div>
 
-    <div id="list" style="background-color: #fff;">
-       <h2>User Login</h2> 
-<p>Login to access dashboard</p>
-<form onsubmit="redirectBasedOnRole(event)">
-    <select name="role" id="role">
-        <option value="">Select Role</option>
-        <option value="driver">Driver</option>
-        <option value="admin">Admin</option>
-    </select><br>
-    <input type="text" placeholder="User name"><br>
-    <input type="password" placeholder="Password"><br>
-    <input type="submit" id="submit" value="Login">
-</form>
 
-<script>
-function redirectBasedOnRole(event) {
-    event.preventDefault(); // Prevent the form from submitting the traditional way
-    const role = document.getElementById('role').value;
-    if (role === 'admin') {
-        window.location.href = 'admin.html';
-    } else if (role === 'driver') {
-        window.location.href = 'driverPage.html';
-    } else {
-        alert('Please select a valid role');
-    }
-}
-</script>
+    <div id="list">
+       <p> Patient Information</p>
+       <h2>List of All Patients</h2> 
+<div style="height: 350px;">
 
+</div>
     </div>
 </main>
 
+<footer>
+   <p>© Business All Rights Reserved.</p> 
+</footer>
 
 
 </body>

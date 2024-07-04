@@ -13,9 +13,9 @@
         </div>
         <div class="div2">
         <ul>
-        <li><a href="index.html">Home </a></li>
+            <li><a href="#" onclick="history.back(); return false;">Return</a></li>
+
       
-        <li><a id="contactbtn" href="#">About Us</a></li>
     </ul>
     
         </div>
@@ -24,16 +24,14 @@
     <div>
       <img src="images/logo.png" alt="" >
   </div> 
-      <div onclick="openNav()" >
-          <div class="container" onclick="myFunction(this)" id="sideNav">
-              <div class="bar1"></div>
-              <div class="bar2"></div>
-              <div class="bar3"></div>
-            </div>
-          </div>
+  <div onclick="openNav()" >
+    <div class="container" onclick="myFunction(this)" id="sideNav" >
+        <a style="border: 1px solid white;padding: 10px;border-radius: 7px;color: white;text-decoration: none;" href="#" onclick="history.back(); return false;">Return</a>
+    </div>
+    </div>
   </aside>
 
-  <nav style="z-index: 1;">
+  <!-- <nav style="z-index: 1;">
     <div id="mySidenav" class="sidenav">
         <img src="images/logo.png" alt="">
         <a href="index.html">Home</a>      
@@ -59,7 +57,7 @@ function openNav() {
     }
 }
     </script>
-</nav>
+</nav> -->
 <main>
 <div id="divide">
    <div class="divide1">
@@ -89,6 +87,8 @@ function openNav() {
         <input type="time" name="pickup_time"><br>
         <label for="">Pick-up Driver</label><br>
         <input type="text" name="pickup_driver"><br> 
+        <label for="">Bus name</label><br>
+        <input type="text" name="pickup_bus_name"><br>
          <label for="">Bus number</label><br>
         <input type="text" name="pickup_bus_number"><br>
         <input type="submit" id="submit">
