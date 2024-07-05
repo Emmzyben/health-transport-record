@@ -106,7 +106,13 @@ aside{
             margin-right: 40px;
             margin-top: 10px;
           }
-          
+          .container2 {
+            display: block;
+            position: absolute;
+            right: 0;
+            margin-right: 40px;
+            margin-top: 10px;
+          }
           .bar1, .bar2, .bar3 {
             width: 20px;
             height: 5px;
@@ -147,7 +153,7 @@ padding: 30px;width: 35%;
     padding: 10px;text-align: center;background-color: rgb(236, 236, 236);
 }
   footer{
-    background-color: #1c1c1d;color: #fff;padding: 30px;text-align: center;
+    background-color: #1c1c1d;color: #fff;padding: 30px;text-align: center;display: none;
   }
   #divideAdmin{
     display: flex;flex-direction: row;justify-content: space-evenly;
@@ -156,19 +162,23 @@ padding: 30px;width: 35%;
     padding: 20px;
   }
   .divideAdmin1{
-    width: 83%;
+    width: 78%;position: absolute;right: 0;
   }
   .divideAdmin2{
-    width: 17%;background-color: rgb(236, 236, 236);height: 400px;
+    width: 17%;background-color: rgb(236, 236, 236);position: fixed;left: 0;bottom: 0;top: 10%;
   }
 
 .divideAdmin2 ul>li{
-  margin-bottom: 30px;
+  margin-bottom: 10px;
+  list-style-type: square;
+  background-color: #007bff56;padding: 7px;border-radius: 5px;
 }
 .divideAdmin2 a{
-  text-decoration: none;color: #000000;padding: 7px;border-radius: 7px;
+  text-decoration: none;color: #000000;font-weight: 600;
 }
-.divideAdmin2 a:hover{
+.divideAdmin2 li:hover{
+  background-color: #007aff;color: #fff;
+}.divideAdmin2 a:hover{
   background-color: #007aff;color: #fff;
 }
   #divide{
@@ -263,7 +273,7 @@ table,tr,td,th{
 }
 @media only screen and (max-width: 900px) {
   .divideAdmin1{
-    width:100%;height: 400px;
+    width:100%;position: unset;
   }
   .divideAdmin2{
     display: none;

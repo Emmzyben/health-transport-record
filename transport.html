@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Driver Page</title>
+    <title>Admin page</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,17 +11,7 @@
           <img src="images/logo.png">
         </div>
         <div class="div2">
-        <ul>
-            <li><a href="driverPage.html">Home</a></li>
-            <li class="nav-container">
-                <span id="hoverer">Insert Record</span> 
-                <ul id="dropdown">
-                    <li><a href="driverPick.html">Pick-Up</a></li> 
-                    <li><a href="driverDrop.html">Drop-off</a></li> 
-                </ul>
-            </li>
-            <li><a href="index.html">Log Out</a></li>
-    </ul>
+       
     
         </div>
       </header>
@@ -30,19 +20,21 @@
       <img src="images/logo.png" alt="" >
   </div> 
       <div onclick="openNav()" >
-          <div class="container" onclick="myFunction(this)" id="sideNav" >
-              <p style="border: 1px solid white;padding: 10px;border-radius: 7px;color: white;">Menu</p>
+            <div class="container" onclick="myFunction(this)" id="sideNav" >
+                <p style="border: 1px solid white;padding: 10px;border-radius: 7px;color: white;">Menu</p>
+              </div>
             </div>
-          </div>
   </aside>
 
   <nav style="z-index: 1;">
     <div id="mySidenav" class="sidenav">
         <img src="images/logo.png" alt="">
-        <a href="driverPage.html">Home</a>
-        <a href="driverPick.html">Insert Pick-Up</a> 
-<a href="driverDrop.html">Insert Drop-off</a>
-<a href="index.html">Log Out</a>
+        <a href="admin.html">Overview</a>
+        <a href="pickup.html">Insert pick-up</a>
+        <a href="dropOff.html">Insert drop-off</a>
+        <a href="create_driver.html">Create Driver Record</a>
+        <a href="create_bus.html">Create Bus Record</a>
+        <a href="index.html">Log Out</a>
     </div>
     <script>
     
@@ -66,11 +58,25 @@ function openNav() {
     </script>
 </nav>
 <main>
-<div style="padding: 20px;height: 700px;">
-   <div >
-    <h3>Driver Records</h3>
-    <p>Record for pick-up and drop-off</p>
-<div style="overflow: auto;">
+<div id="divideAdmin">
+<div class="divideAdmin2">
+    <h3>Admin dashboard</h3>
+<ul>
+    <li><a href="admin.html">Company records</a></li>
+    <li><a href="transport.html">Transport records</a></li>
+    <li><a href="generate.html">Generate transport record</a></li>
+    <li><a href="pickup.html">Insert pick-up</a></li>
+    <li><a href="dropOff.html">Insert drop-off</a></li>
+    <li><a href="patient.html">Create patient record</a></li>
+    <li><a href="create_driver.html">Create Driver Record</a></li>
+    <li><a href="create_bus.html">Create Bus Record</a></li>
+    <li><a href="index.html">Log Out</a></li>
+</ul>
+</div> 
+   <div class="divideAdmin1">
+ 
+    <h3>Driver List</h3>
+<div>
     <table id="driverTable">
         <tr>
             <th>Date</th>

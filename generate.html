@@ -9,14 +9,9 @@
     <header id="header" style="position:sticky;top:0">
         <div class="div1">
           <img src="images/logo.png">
-          <h2>Health Management Solutions</h2>
         </div>
         <div class="div2">
-        <ul>
-        <li><a href="index.html">Home </a></li>
-      
-        <li><a id="contactbtn" href="#">About Us</a></li>
-    </ul>
+       
     
         </div>
       </header>
@@ -25,19 +20,23 @@
       <img src="images/logo.png" alt="" >
   </div> 
       <div onclick="openNav()" >
-          <div class="container" onclick="myFunction(this)" id="sideNav">
-              <div class="bar1"></div>
-              <div class="bar2"></div>
-              <div class="bar3"></div>
+            <div class="container" onclick="myFunction(this)" id="sideNav" >
+                <p style="border: 1px solid white;padding: 10px;border-radius: 7px;color: white;">Menu</p>
+              </div>
             </div>
-          </div>
   </aside>
 
   <nav style="z-index: 1;">
     <div id="mySidenav" class="sidenav">
-        <img src="images/logo.png" alt="">
-        <a href="index.html">Home</a>      
-      <a >About Us</a>
+        <a href="admin.html">Company records</a>
+        <a href="transport.html">Transport records</a>
+        <a href="generate.html">Generate report</a>
+        <a href="pickup.html">Insert pick-up</a>
+        <a href="dropOff.html">Insert drop-off</a>
+        <a href="patient.html">Create patient record</a>
+        <a href="create_driver.html">Create Driver Record</a>
+        <a href="create_bus.html">Create Bus Record</a>
+        <a href="index.html">Log Out</a></li>
     </div>
     <script>
     
@@ -61,19 +60,39 @@ function openNav() {
     </script>
 </nav>
 <main>
- 
+    <div id="divideAdmin">
+        <div class="divideAdmin2">
+            <h3>Admin dashboard</h3>
+        <ul>
+            <li><a href="admin.html">Company records</a></li>
+            <li><a href="transport.html">Transport records</a></li>
+            <li><a href="generate.html">Generate report</a></li>
+            <li><a href="pickup.html">Insert pick-up</a></li>
+            <li><a href="dropOff.html">Insert drop-off</a></li>
+            <li><a href="patient.html">Create patient record</a></li>
+            <li><a href="create_driver.html">Create Driver Record</a></li>
+            <li><a href="create_bus.html">Create Bus Record</a></li>
+            <li><a href="index.html">Log Out</a></li>
+        </ul>
+        </div> 
+           <div class="divideAdmin1">
+            <div id="list" style="background-color: #fff;">
+                <h2>Generate Daily Transportation Record</h2> 
+         <p>Enter Record date to generate transport record</p>
+         
+         
+         <form action="">
+             <label for="">Record date</label><br>
+             <input type="date" name="record_date"><br>
+             <input type="submit" id="submit" value="Generate">
+         </form>
+             </div>
+        </div>  
+        
+        
+        </div>
 
-    <div id="list" style="background-color: #fff;">
-       <h2>Generate Daily Transportation Record</h2> 
-<p>Enter Record date to generate transport record</p>
-
-
-<form action="">
-    <label for="">Record date</label><br>
-    <input type="date" name="record_date"><br>
-    <input type="submit" id="submit" value="Generate">
-</form>
-    </div>
+    
 </main>
 
 
