@@ -187,13 +187,32 @@ padding: 30px;width: 35%;
   #divide>div{
     padding: 20px;
   }
+  .divo{
+    width: 20%; background-color: rgb(236, 236, 236);position: fixed;left: 0;bottom: 0;top: 10%;
+  }
+  .divo ul>li{
+    margin-bottom: 10px;
+    list-style-type: square;
+    background-color: #007bff56;padding: 7px;border-radius: 5px;
+  }
+  .divo a{
+    text-decoration: none;color: #000000;font-weight: 600;
+  }
+  .divo li:hover{
+    background-color: #007aff;color: #fff;
+  }.divo a:hover{
+    background-color: #007aff;color: #fff;
+  }
   .divide1{
-    width: 75%;
+    width:50% ;
+  }
+  .divider{
+    width: 75%;position: fixed;left: 0;
   }
   .divide2{
-    width: 25%;background-color: rgb(236, 236, 236);height: 700px;
+    background-color: rgb(236, 236, 236);position: fixed;right: 0;bottom: 0;top: 10%;
   }
-  #divide form>input{
+  #divide form>select, input{
     border-radius: 6px;padding: 10px;margin-bottom: 10px;border: 1px solid rgb(224, 219, 219);
     width:100%;
 }
@@ -278,14 +297,19 @@ table,tr,td,th{
   .divideAdmin2{
     display: none;
   }
-
+.divo{
+  display: none;
+}
     #divide{
         flex-direction: column;
     }  .divide1{
-        width:auto;
+        width:auto;     
+      }
+      .divider{
+        width: auto;position: unset;
       }
       .divide2{
-        width: auto;height: auto;
+        width: auto;height: auto;position: unset;
       }
           #enter{
             flex-direction: column;

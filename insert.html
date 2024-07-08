@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drop Off form</title>
+    <title>Pickup form</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -10,7 +10,6 @@
         <div class="div1">
           <img src="images/logo.png">
         </div>
-        <div class="div2">
       
     
         </div>
@@ -59,7 +58,7 @@ function openNav() {
 }
     </script>
 </nav>
-<main>
+    <main>
 <div id="divide">
     <div class="divo">
         <div >
@@ -78,7 +77,7 @@ function openNav() {
     </div> 
     </div>
     
-   <div class="divide1">
+   <div class="divide1" >
     <h3>Patient List</h3>
 <p>Select Patient</p>
 <div>
@@ -99,12 +98,18 @@ function openNav() {
 
 <div class="divide2">
 <form action="">
-        <label for="">Drop-off date</label><br>
+        <label for="">Date</label><br>
         <input type="date" name="pickup_date"><br>
-        <label for="">Drop-off Time</label><br>
+        <label for="">Time</label><br>
         <input type="time" name="pickup_time"><br>
-        <label for="">Drop-off Driver</label><br>
+        <label for="">Driver</label><br>
         <input type="text" name="pickup_driver"><br> 
+        <label for="">Transport record type</label><br>
+        <select name="recordType" id="">
+            <option value="">Select record type</option>
+            <option value="Pick-up">Pick Up</option>
+            <option value="Drop-off">Drop Off</option>
+        </select><br>
         <label for="">Bus name</label><br>
         <input type="text" name="pickup_bus_name"><br>
          <label for="">Bus number</label><br>
