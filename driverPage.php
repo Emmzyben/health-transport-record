@@ -1,8 +1,17 @@
-<html lang="en">
+<?php
+session_start();
+
+if (!isset($_SESSION['userid']) || $_SESSION['role'] !== 'driver') {
+    header("Location: index.php");
+    exit;
+}
+
+
+?><html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <link rel="shortcut icon" href="images/logo.png">
+    <title>Driver Page</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -11,7 +20,13 @@
           <img src="images/logo.png">
         </div>
         <div class="div2">
-       
+        <ul>
+            <li style="color:white"><?php echo "Hello, " . $_SESSION['username'] . "!"?></li>
+            <li><a href="driverPage.php">Home</a></li>
+           <li><a href="driverinsert.php">Insert Record</a></li>
+            <li> <a href="logout.php">Log Out</a></li>
+            
+    </ul>
     
         </div>
       </header>
@@ -20,21 +35,19 @@
       <img src="images/logo.png" alt="" >
   </div> 
       <div onclick="openNav()" >
-            <div class="container" onclick="myFunction(this)" id="sideNav" >
-                <p style="border: 1px solid white;padding: 10px;border-radius: 7px;color: white;">Menu</p>
-              </div>
+          <div class="container" onclick="myFunction(this)" id="sideNav" >
+              <p style="border: 1px solid white;padding: 10px;border-radius: 7px;color: white;">Menu</p>
             </div>
+          </div>
   </aside>
 
   <nav style="z-index: 1;">
     <div id="mySidenav" class="sidenav">
         <img src="images/logo.png" alt="">
-        <a href="admin.html">Overview</a>
-        <a href="insert.html">Insert transport record</a>
-         
-        <a href="create_driver.html">Create Driver Record</a>
-        <a href="create_bus.html">Create Bus Record</a>
-        <a href="index.html">Log Out</a>
+        <a href="driverPage.php">Home</a>
+        <a href="driverinsert.php">Insert record</a> 
+
+            <a href="logout.php">Log Out</a>
     </div>
     <script>
     
@@ -58,25 +71,11 @@ function openNav() {
     </script>
 </nav>
 <main>
-<div id="divideAdmin">
-<div class="divideAdmin2">
-    <h3>Admin dashboard</h3>
-<ul>
-    <li><a href="admin.html">Company records</a></li>
-    <li><a href="transport.html">Transport records</a></li>
-    <li><a href="generate.html">Generate transport record</a></li>
-    <li><a href="insert.html">Insert transport record</a></li>
-     
-    <li><a href="patient.html">Create patient record</a></li>
-    <li><a href="create_driver.html">Create Driver Record</a></li>
-    <li><a href="create_bus.html">Create Bus Record</a></li>
-    <li><a href="index.html">Log Out</a></li>
-</ul>
-</div> 
-   <div class="divideAdmin1">
- 
-    <h3>Transportation records</h3>
-<div>
+<div style="padding: 20px;height: 700px;">
+   <div >
+    <h3>Driver Records</h3>
+    <p>Record for pick-up and drop-off</p>
+<div style="overflow: auto;">
     <table id="driverTable">
         <tr>
             <th>Date</th>

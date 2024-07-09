@@ -1,8 +1,18 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['userid']) || $_SESSION['role'] !== 'driver') {
+    header("Location: index.php");
+    exit;
+}
+
+
+?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pickup form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <link rel="shortcut icon" href="images/logo.png">
+    <title>insert record</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,11 +22,12 @@
         </div>
         <div class="div2">
         <ul>
-            <li><a href="driverPage.html">Home</a></li>
-           <li><a href="driverInsert.html">Insert Record</a></li>
-            <li><a href="index.html">Log Out</a></li>
+            <li style="color:white"><?php echo "Hello, " . $_SESSION['username'] . "!"?></li>
+            <li><a href="driverPage.php">Home</a></li>
+           <li><a href="driverinsert.php">Insert Record</a></li>
+            <li> <a href="logout.php">Log Out</a></li>
+            
     </ul>
-    
         </div>
       </header>
      <aside> 
@@ -33,9 +44,10 @@
   <nav style="z-index: 1;">
     <div id="mySidenav" class="sidenav">
         <img src="images/logo.png" alt="">
-        <a href="driverPage.html">Home</a>
-        <a href="driverInsert.html">Insert record</a> 
-<a href="index.html">Log Out</a>
+        <a href="driverPage.php">Home</a>
+        <a href="driverinsert.php">Insert record</a> 
+
+            <a href="logout.php">Log Out</a>
     </div>
     <script>
     
