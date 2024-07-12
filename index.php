@@ -55,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brightway Day Center</title>
     <link rel="shortcut icon" href="images/logo.png">
+    <script src="https://kit.fontawesome.com/f0fb58e769.js" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -139,5 +140,6 @@ function openNav() {
 
 
 
+ <script src="script.js"></script>
 </body>
 </html>

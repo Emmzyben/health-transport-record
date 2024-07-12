@@ -12,6 +12,7 @@ $dbname = "brightway";
 
 $message = '';
 $patients = [];
+$messageType = '';
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -26,6 +27,24 @@ if ($result->num_rows > 0) {
         $patients[] = $row;
     }
 }
+$drivers = [];
+$result = $conn->query("SELECT id, name FROM admin WHERE role = 'driver'");
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $drivers[] = $row;
+    }
+}
+
+
+$buses = [];
+$result = $conn->query("SELECT id, bus_name, plate_number FROM bus_record");
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $buses[] = $row; 
+    }
+}
+
+
 
 $conn->close();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -61,15 +80,62 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     
   
-    $message = "Transport records submitted successfully!";
+    $_SESSION['message'] = "Transport records submitted successfully!";
+    $_SESSION['messageType']= 'success';
+    header("Location: " . $_SERVER['PHP_SELF']);
+    exit;
+}
+if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
+    $messageType = $_SESSION['messageType'];
+    unset($_SESSION['message']);
+    unset($_SESSION['messageType']);
 }
 ?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> <link rel="shortcut icon" href="images/logo.png">
+    <script src="https://kit.fontawesome.com/f0fb58e769.js" crossorigin="anonymous"></script>
     <title>insert record</title>
 <link rel="stylesheet" href="style.css">
+<style>
+        .notification-bar {
+            padding: 10px;
+            text-align: center;
+            z-index: 1050;
+            display: none;
+        }
+        .notification-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .notification-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .close-btn {
+            margin-left: 15px;
+            color: #000;
+            font-weight: bold;
+            float: right;
+            font-size: 20px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .close-btn:hover {
+            color: #999;
+        }
+        .divide2{
+            width: 20%;
+        }
+        @media only screen and (max-width: 900px) {
+  
+      .divide2{
+        width: auto;height: auto;position: unset;
+      }}
+    </style>
 </head>
 <body>
     <header id="header" style="position:sticky;top:0">
@@ -99,7 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div id="mySidenav" class="sidenav">
         <a href="admin.php">Company records</a>
         <a href="transport.php">Transport records</a>
-        <a href="generate.html">Generate report</a>
+        <a href="generate.php">Generate report</a>
         <a href="insert.php">Insert transport record</a>
          
         <a href="patient.php">Create patient record</a>
@@ -133,11 +199,11 @@ function openNav() {
 <div id="divide">
     <div class="divo">
         <div >
+        <ul id="myList">
         <h3>Admin dashboard</h3>
-    <ul>
         <li><a href="admin.php">Company records</a></li>
         <li><a href="transport.php">Transport records</a></li>
-        <li><a href="generate.html">Generate report</a></li>
+        <li><a href="generate.php">Generate report</a></li>
         <li><a href="insert.php">Insert transport record</a></li>
          
         <li><a href="patient.php">Create patient record</a></li>
@@ -150,6 +216,14 @@ function openNav() {
     </div>
     
     <div class="divide1">
+    <?php
+                    if (!empty($message)) {
+                        echo '<div id="notificationBar" class="notification-bar notification-' . $messageType . '">';
+                        echo $message;
+                        echo '<span class="close-btn" onclick="closeNotification()">&times;</span>';
+                        echo '</div>';
+                    }
+                ?>
         <h3>Patient List</h3>
         <p>Select Patient</p>
         <form id="patientForm">
@@ -178,31 +252,52 @@ function openNav() {
             <label for="pickup_time">Time</label><br>
             <input type="time" id="pickup_time" name="pickup_time" required><br>
             <label for="pickup_driver">Driver</label><br>
-            <input type="text" id="pickup_driver" name="pickup_driver" required><br>
+<select id="pickup_driver" name="pickup_driver" required>
+    <option value="">Select Driver</option>
+    <?php foreach ($drivers as $driver): ?>
+        <option value="<?php echo htmlspecialchars($driver['name']); ?>"><?php echo htmlspecialchars($driver['name']); ?></option>
+    <?php endforeach; ?>
+</select>
+
             <label for="recordType">Transport record type</label><br>
             <select id="recordType" name="recordType" required>
                 <option value="">Select record type</option>
-                <option value="Pick-up">Pick Up</option>
-                <option value="Drop-off">Drop Off</option>
+                <option value="Pick up">Pick Up</option>
+                <option value="Drop off">Drop Off</option>
             </select><br>
-            <label for="pickup_bus_name">Bus name</label><br>
-            <input type="text" id="pickup_bus_name" name="pickup_bus_name" required><br>
-            <label for="pickup_bus_number">Bus number</label><br>
-            <input type="text" id="pickup_bus_number" name="pickup_bus_number" required><br>
+            <input type="text" id="pickup_bus_name" name="pickup_bus_name" hidden>
+
+<label for="pickup_bus_number">Bus number</label><br>
+<select id="pickup_bus_number" name="pickup_bus_number" required>
+    <option value="">Select Bus Number</option>
+    <?php foreach ($buses as $bus): ?>
+        <option value="<?php echo htmlspecialchars($bus['plate_number']); ?>" 
+                data-bus-name="<?php echo htmlspecialchars($bus['bus_name']); ?>">
+            <?php echo htmlspecialchars($bus['plate_number']); ?>
+        </option>
+    <?php endforeach; ?>
+</select><br>
+<script>
+    document.getElementById('pickup_bus_number').addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        var busName = selectedOption.getAttribute('data-bus-name');
+        document.getElementById('pickup_bus_name').value = busName;
+    });
+</script>
+
+
             <div id="selectedPatientsContainer"></div>
             <input type="submit" value="Submit" style='background-color:#007aff;color:white'>
         </form>
         
-        <?php if (!empty($message)): ?>
-        <p><?php echo $message; ?></p>
-        <?php endif; ?>
+       
     </div>
 </div>
 <script>
 function copySelectedPatients() {
     const checkboxes = document.querySelectorAll('#patientForm input[type="checkbox"]:checked');
     const container = document.getElementById('selectedPatientsContainer');
-    container.innerHTML = ''; // Clear any existing inputs
+    container.innerHTML = '';
 
     checkboxes.forEach((checkbox) => {
         const input = document.createElement('input');
@@ -219,6 +314,23 @@ function copySelectedPatients() {
    <p>© Business All Rights Reserved.</p> 
 </footer>
 
+<script>
+        function closeNotification() {
+            var notificationBar = document.getElementById("notificationBar");
+            notificationBar.style.display = "none";
+        }
 
+        // Automatically show and dismiss the notification bar after 5 seconds
+        window.onload = function() {
+            var notificationBar = document.getElementById("notificationBar");
+            if (notificationBar) {
+                notificationBar.style.display = "block";
+                setTimeout(function() {
+                    notificationBar.style.display = "none";
+                }, 5000);
+            }
+        }
+    </script>
+ <script src="script.js"></script>
 </body>
 </html>

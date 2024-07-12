@@ -18,10 +18,13 @@ header{
    width: 70%;
   }
   header>div>img{
-    width:120px;
-    height:80px;
-    margin-left: 60px;
+    width:100px;
+    height:60px;
+    margin-left: 80px;
     margin: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
   }
   header>div>ul{
     margin-top: 40px;
@@ -55,9 +58,12 @@ aside{
     z-index: 100;
     }
     aside>div>img{
-    width: 100px;
-    height: 80px;
+    width: 80px;
+    height: 60px;
     margin: 10px;
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
     }
     .sidenav {
         height: 100%;
@@ -141,7 +147,7 @@ padding: 30px;width: 35%;
 
           #enter form>input{
                border-radius: 6px;padding: 10px;margin-bottom: 10px;border: 1px solid rgb(224, 219, 219);
-          width: 100%;
+          width:auto !important;
             }
 #submit{
     background-color: #007aff;color: #fff;width: auto;
@@ -165,13 +171,17 @@ padding: 30px;width: 35%;
     width: 78%;position: absolute;right: 0;
   }
   .divideAdmin2{
-    width: 17%;background-color: rgb(236, 236, 236);position: fixed;left: 0;bottom: 0;top: 10%;
+    width: 17%;background-color: rgb(236, 236, 236);position: fixed;left: 0;bottom: 0;top: 0;
   }
-
+  #myList{
+    margin-left:-12% !important;
+}
 .divideAdmin2 ul>li{
   margin-bottom: 10px;
-  list-style-type: square;
   background-color: #007bff56;padding: 7px;border-radius: 5px;
+}
+.divideAdmin2>ul{
+  margin-top: 45%;
 }
 .divideAdmin2 a{
   text-decoration: none;color: #000000;font-weight: 600;
@@ -188,7 +198,10 @@ padding: 30px;width: 35%;
     padding: 20px;
   }
   .divo{
-    width: 20%; background-color: rgb(236, 236, 236);position: fixed;left: 0;bottom: 0;top: 10%;
+    width: 20%; background-color: rgb(236, 236, 236);position: fixed;left: 0;bottom: 0;top: 0;
+  }
+  .divo ul{
+    margin-top: 35%;
   }
   .divo ul>li{
     margin-bottom: 10px;
@@ -210,7 +223,14 @@ padding: 30px;width: 35%;
     width: 75%;position: fixed;left: 0;
   }
   .divide2{
-    background-color: rgb(236, 236, 236);position: fixed;right: 0;bottom: 0;top: 10%;
+    background-color: rgb(236, 236, 236);position: fixed;right: 0;bottom: 0;top: 0;width: 30% ;
+  }
+  .divide2 form{
+    margin-top: 30%;
+  }
+  .divide2 form>select{
+      border-radius: 6px;padding: 10px;margin-bottom: 10px;border: 1px solid rgb(224, 219, 219);
+    width:100%;
   }
   #divide form>select, input{
     border-radius: 6px;padding: 10px;margin-bottom: 10px;border: 1px solid rgb(224, 219, 219);
@@ -310,12 +330,14 @@ table,tr,td,th{
       }
       .divide2{
         width: auto;height: auto;position: unset;
+      } .divide2 form{
+        margin-top: 0;
       }
           #enter{
             flex-direction: column;
           }
           #enter>div{
-            padding: 15px;width: 90%;
+            padding: 10px;width: auto;
           }
             header{
                 display: none;
