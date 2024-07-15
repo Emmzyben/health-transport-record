@@ -109,14 +109,10 @@ $dbname = "brightway";
         </div>
     </aside>
     <nav style="z-index: 1;">
-        <div id="mySidenav" class="sidenav">
-            <a href="admin.php">Company records</a>
+         <div id="mySidenav" class="sidenav">
             <a href="transport.php">Transport records</a>
             <a href="generate.php">Generate report</a>
-            <a href="insert.php">Insert transport record</a>
-            <a href="patient.php">Create patient record</a>
-            <a href="create_driver.php">Create Driver Record</a>
-            <a href="create_bus.php">Create Bus Record</a>
+            <a href="admin.php">Company records</a>  
             <a href="logout.php">Log Out</a>
         </div>
         <script>
@@ -143,15 +139,12 @@ $dbname = "brightway";
     <main>
         <div id="divideAdmin">
             <div class="divideAdmin2">
-                <ul id="myList">
+               <ul id="myList">
                 <h3>Admin dashboard</h3>
-                    <li><a href="admin.php">Company records</a></li>
                     <li><a href="transport.php">Transport records</a></li>
                     <li><a href="generate.php">Generate report</a></li>
-                    <li><a href="insert.php">Insert transport record</a></li>
-                    <li><a href="patient.php">Create patient record</a></li>
-                    <li><a href="create_driver.php">Create Driver Record</a></li>
-                    <li><a href="create_bus.php">Create Bus Record</a></li>
+                    <li><a href="patient.php">Patient Records</a></li>
+                    <li><a href="admin.php">Company records</a></li>  
                     <li><a href="logout.php">Log Out</a></li>
                 </ul>
             </div> 

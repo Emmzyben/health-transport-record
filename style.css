@@ -310,6 +310,15 @@ table,tr,td,th{
   display: block;
   
 }
+.add{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;margin-bottom: 10px;margin-top: 50px;
+}
+.linkBtn{
+  text-decoration: none;margin-right: 50px;
+  color: #1c1c1d;border: 1px solid #1c1c1d;padding: 7px;font-size: 12px;border-radius: 6px;
+}
 @media only screen and (max-width: 900px) {
   .divideAdmin1{
     width:100%;position: unset;

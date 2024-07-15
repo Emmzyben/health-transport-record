@@ -71,8 +71,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bind_param("ssssssss", $first_name, $last_name, $pickup_date, $pickup_time, $pickup_driver, $recordType, $pickup_bus_name, $pickup_bus_number);
     
     foreach ($selected_patients as $patient) {
-        list($first_name, $last_name) = explode(' ', $patient, 2);
-        $stmt->execute();
+        $name_parts = explode(' ', $patient, 2);
+        if (count($name_parts) == 2) {
+            $first_name = $name_parts[0];
+            $last_name = $name_parts[1];
+            $stmt->execute();
+        } else {
+            error_log("Invalid patient name: " . $patient);
+        }
     }
 
     $stmt->close();
@@ -82,15 +88,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   
     $_SESSION['message'] = "Transport records submitted successfully!";
     $_SESSION['messageType']= 'success';
-    header("Location: " . $_SERVER['PHP_SELF']);
+    header("Location: transport.php");
     exit;
 }
-if (isset($_SESSION['message'])) {
-    $message = $_SESSION['message'];
-    $messageType = $_SESSION['messageType'];
-    unset($_SESSION['message']);
-    unset($_SESSION['messageType']);
-}
+
 ?>
 <html lang="en">
 <head>
@@ -100,33 +101,7 @@ if (isset($_SESSION['message'])) {
     <title>insert record</title>
 <link rel="stylesheet" href="style.css">
 <style>
-        .notification-bar {
-            padding: 10px;
-            text-align: center;
-            z-index: 1050;
-            display: none;
-        }
-        .notification-success {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        .notification-error {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-        .close-btn {
-            margin-left: 15px;
-            color: #000;
-            font-weight: bold;
-            float: right;
-            font-size: 20px;
-            line-height: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .close-btn:hover {
-            color: #999;
-        }
+      
         .divide2{
             width: 20%;
         }
@@ -162,18 +137,12 @@ if (isset($_SESSION['message'])) {
       </aside>
 
   <nav style="z-index: 1;">
-    <div id="mySidenav" class="sidenav">
-        <a href="admin.php">Company records</a>
-        <a href="transport.php">Transport records</a>
-        <a href="generate.php">Generate report</a>
-        <a href="insert.php">Insert transport record</a>
-         
-        <a href="patient.php">Create patient record</a>
-        <a href="create_driver.php">Create Driver Record</a>
-        <a href="create_bus.php">Create Bus Record</a>
-        
-            <a href="logout.php">Log Out</a></li>
-    </div>
+  <div id="mySidenav" class="sidenav">
+            <a href="transport.php">Transport records</a>
+            <a href="generate.php">Generate report</a>
+            <a href="admin.php">Company records</a>  
+            <a href="logout.php">Log Out</a>
+        </div>
     <script>
     
 function myFunction(x) {
@@ -200,48 +169,46 @@ function openNav() {
     <div class="divo">
         <div >
         <ul id="myList">
-        <h3>Admin dashboard</h3>
-        <li><a href="admin.php">Company records</a></li>
-        <li><a href="transport.php">Transport records</a></li>
-        <li><a href="generate.php">Generate report</a></li>
-        <li><a href="insert.php">Insert transport record</a></li>
-         
-        <li><a href="patient.php">Create patient record</a></li>
-        <li><a href="create_driver.php">Create Driver Record</a></li>
-        <li><a href="create_bus.php">Create Bus Record</a></li>
-        <li>
-            <a href="logout.php">Log Out</a></li>
-    </ul>
+                <h3>Admin dashboard</h3>
+                    <li><a href="transport.php">Transport records</a></li>
+                    <li><a href="generate.php">Generate report</a></li>
+                    <li><a href="patient.php">Patient Records</a></li>
+                    <li><a href="admin.php">Company records</a></li>  
+                    <li><a href="logout.php">Log Out</a></li>
+                </ul>
     </div> 
     </div>
     
     <div class="divide1">
-    <?php
-                    if (!empty($message)) {
-                        echo '<div id="notificationBar" class="notification-bar notification-' . $messageType . '">';
-                        echo $message;
-                        echo '<span class="close-btn" onclick="closeNotification()">&times;</span>';
-                        echo '</div>';
-                    }
-                ?>
-        <h3>Patient List</h3>
+ 
+        <h3> New Transport Record</h3>
         <p>Select Patient</p>
         <form id="patientForm">
-            <table>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Select</th>
-                </tr>
-                <?php foreach ($patients as $patient): ?>
-                <tr>
-                    <td><?php echo htmlspecialchars($patient['first_name']); ?></td>
-                    <td><?php echo htmlspecialchars($patient['last_name']); ?></td>
-                    <td><input type="checkbox" name="selected_patients[]" value="<?php echo htmlspecialchars($patient['first_name'] . ' ' . $patient['last_name']); ?>"></td>
-                </tr>
-                <?php endforeach; ?>
-            </table>
-        </form>
+    <table>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Select All <input type="checkbox" id="selectAll"></th>
+        </tr>
+        <?php foreach ($patients as $patient): ?>
+        <tr>
+            <td><?php echo htmlspecialchars($patient['first_name']); ?></td>
+            <td><?php echo htmlspecialchars($patient['last_name']); ?></td>
+            <td><input type="checkbox" name="selected_patients[]" value="<?php echo htmlspecialchars($patient['first_name'] . ' ' . $patient['last_name']); ?>"></td>
+        </tr>
+        <?php endforeach; ?>
+    </table>
+</form>
+
+<script>
+    document.getElementById('selectAll').addEventListener('change', function() {
+        var checkboxes = document.querySelectorAll('#patientForm input[type="checkbox"]');
+        for (var checkbox of checkboxes) {
+            checkbox.checked = this.checked;
+        }
+    });
+</script>
+
     </div>
  
 
@@ -314,23 +281,7 @@ function copySelectedPatients() {
    <p>© Business All Rights Reserved.</p> 
 </footer>
 
-<script>
-        function closeNotification() {
-            var notificationBar = document.getElementById("notificationBar");
-            notificationBar.style.display = "none";
-        }
 
-        // Automatically show and dismiss the notification bar after 5 seconds
-        window.onload = function() {
-            var notificationBar = document.getElementById("notificationBar");
-            if (notificationBar) {
-                notificationBar.style.display = "block";
-                setTimeout(function() {
-                    notificationBar.style.display = "none";
-                }, 5000);
-            }
-        }
-    </script>
  <script src="script.js"></script>
 </body>
 </html>

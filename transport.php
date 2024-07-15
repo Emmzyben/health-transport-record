@@ -10,8 +10,12 @@ $username = "root";
 $password = "";
 $dbname = "brightway";
 
+$message = '';
+$messageType = '';
+
 $detailed_records = [];
 $record_type_filter = isset($_GET['record_type']) ? $_GET['record_type'] : '';
+$record_date_filter = isset($_GET['record_date']) ? $_GET['record_date'] : '';
 $driver_filter = isset($_GET['driver']) ? $_GET['driver'] : '';
 
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -38,15 +42,17 @@ if ($_SERVER["REQUEST_METHOD"] == "GET" && isset($_GET['confirmDelete'])) {
 
     if ($stmt->execute()) {
         $message = "Record deleted successfully.";
+        $messageType='success';
     } else {
         $message = "Error deleting record: " . $stmt->error;
+        $messageType='error';
     }
 
     $stmt->close();
 }
 
 $sql = "SELECT * FROM detailed_records";
-if ($record_type_filter || $driver_filter) {
+if ($record_type_filter || $driver_filter || $record_date_filter) {
     $sql .= " WHERE ";
     $filters = [];
     if ($record_type_filter) {
@@ -55,9 +61,12 @@ if ($record_type_filter || $driver_filter) {
     if ($driver_filter) {
         $filters[] = "driver = '" . $conn->real_escape_string($driver_filter) . "'";
     }
+    if ($record_date_filter) {
+        $filters[] = "record_date = '" . $conn->real_escape_string($record_date_filter) . "'";
+    }
     $sql .= implode(" AND ", $filters);
 }
-$sql .= " ORDER BY created_at DESC";
+$sql .= " ORDER BY record_date DESC, created_at DESC";
 
 $result = $conn->query($sql);
 
@@ -77,6 +86,12 @@ if ($drivers_result->num_rows > 0) {
 }
 
 $conn->close();
+if (isset($_SESSION['message'])) {
+    $message = $_SESSION['message'];
+    $messageType = $_SESSION['messageType'];
+    unset($_SESSION['message']);
+    unset($_SESSION['messageType']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -122,6 +137,35 @@ $conn->close();
             background-color: #0056b3;
         }
     </style>
+    <style>
+          .notification-bar {
+            padding: 10px;
+            text-align: center;
+            z-index: 1050;
+            display: none;
+        }
+        .notification-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .notification-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .close-btn {
+            margin-left: 15px;
+            color: #000;
+            font-weight: bold;
+            float: right;
+            font-size: 20px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .close-btn:hover {
+            color: #999;
+        }
+    </style>
 </head>
 <body>
     <header id="header" style="position: sticky; top: 0;">
@@ -145,14 +189,10 @@ $conn->close();
         </div>
     </aside>
     <nav style="z-index: 1;">
-        <div id="mySidenav" class="sidenav">
-            <a href="admin.php">Company records</a>
+         <div id="mySidenav" class="sidenav">
             <a href="transport.php">Transport records</a>
             <a href="generate.php">Generate report</a>
-            <a href="insert.php">Insert transport record</a>
-            <a href="patient.php">Create patient record</a>
-            <a href="create_driver.php">Create Driver Record</a>
-            <a href="create_bus.php">Create Bus Record</a>
+            <a href="admin.php">Company records</a>  
             <a href="logout.php">Log Out</a>
         </div>
         <script>
@@ -178,36 +218,55 @@ $conn->close();
     <main>
         <div id="divideAdmin">
             <div class="divideAdmin2">
-                <ul id="myList">
+            <ul id="myList">
                 <h3>Admin dashboard</h3>
-                    <li><a href="admin.php">Company records</a></li>
                     <li><a href="transport.php">Transport records</a></li>
-                    <li><a href="generate.php">Generate transport record</a></li>
-                    <li><a href="insert.php">Insert transport record</a></li>
-                    <li><a href="patient.php">Create patient record</a></li>
-                    <li><a href="create_driver.php">Create Driver Record</a></li>
-                    <li><a href="create_bus.php">Create Bus Record</a></li>
+                    <li><a href="generate.php">Generate report</a></li>
+                    <li><a href="patient.php">Patient Records</a></li>
+                    <li><a href="admin.php">Company records</a></li>  
                     <li><a href="logout.php">Log Out</a></li>
                 </ul>
             </div>
             <div class="divideAdmin1">
-                <h3>Transportation records</h3>
-                <form method="get" action="">
-                    <label for="record_type">Sort by Record Type:</label>
-                    <select name="record_type" id="record_type" onchange="this.form.submit()">
-                        <option value="">All</option>
-                        <option value="Pick up" <?php if ($record_type_filter == 'Pick up') echo 'selected'; ?>>Pick Up</option>
-                        <option value="Drop off" <?php if ($record_type_filter == 'Drop off') echo 'selected'; ?>>Drop Off</option>
-                    </select>
-                    <span style="margin-left:10px"></span>
-                    <label for="driver">Sort by Driver:</label>
-                    <select name="driver" id="driver" onchange="this.form.submit()">
-                        <option value="">All</option>
-                        <?php foreach ($drivers as $driver): ?>
-                            <option value="<?php echo htmlspecialchars($driver); ?>" <?php if ($driver_filter == $driver) echo 'selected'; ?>><?php echo htmlspecialchars($driver); ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </form><br>
+            <?php
+                    if (!empty($message)) {
+                        echo '<div id="notificationBar" class="notification-bar notification-' . $messageType . '">';
+                        echo $message;
+                        echo '<span class="close-btn" onclick="closeNotification()">&times;</span>';
+                        echo '</div>';
+                    }
+                ?>
+                <div class="add" style="margin-top:10px">
+                     <span><a><b>Transportation records</b></a></span> 
+                   <span><a class="linkBtn" href="insert.php">New Transport Record</a></span> 
+                  </div>
+                  <form method="get" action="" style="display:flex;flex-direction:row;flex-wrap:wrap">
+    <div style="margin:9px">
+         <label for="record_type" style="font-size:13px">Sort by Record Type:</label>
+    <select name="record_type" id="record_type" onchange="this.form.submit()">
+        <option value="">All</option>
+        <option value="Pick up" <?php if ($record_type_filter == 'Pick up') echo 'selected'; ?>>Pick Up</option>
+        <option value="Drop off" <?php if ($record_type_filter == 'Drop off') echo 'selected'; ?>>Drop Off</option>
+    </select>
+    </div>
+   
+    
+    <div style="margin:9px">
+         <label for="driver" style="font-size:13px">Sort by Driver:</label>
+    <select name="driver" id="driver" onchange="this.form.submit()">
+        <option value="">All</option>
+        <?php foreach ($drivers as $driver): ?>
+            <option value="<?php echo htmlspecialchars($driver); ?>" <?php if ($driver_filter == $driver) echo 'selected'; ?>><?php echo htmlspecialchars($driver); ?></option>
+        <?php endforeach; ?>
+    </select>
+    </div>
+   
+
+    <div style="margin:9px">    <label for="record_date" style="font-size:13px">Sort by Date:</label>
+    <input style="width:100px;padding:0" type="date" name="record_date" id="record_date" value="<?php echo htmlspecialchars($record_date_filter); ?>" onchange="this.form.submit()">
+</div>
+</form>
+<br>
                 <div style="overflow:auto">
                     <table>
                         <tr>
@@ -272,5 +331,13 @@ $conn->close();
         <p>© Business All Rights Reserved.</p>
     </footer>
  <script src="script.js"></script>
+ <script>
+        function closeNotification() {
+            var notificationBar = document.getElementById("notificationBar");
+            notificationBar.style.display = "none";
+        }
+
+     
+    </script>
 </body>
 </html>

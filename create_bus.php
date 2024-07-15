@@ -48,16 +48,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
     $conn->close();
 
-    header("Location: " . $_SERVER['PHP_SELF']);
+    header("Location: admin.php");
     exit;
 }
 
-if (isset($_SESSION['message'])) {
-    $message = $_SESSION['message'];
-    $messageType = $_SESSION['messageType'];
-    unset($_SESSION['message']);
-    unset($_SESSION['messageType']);
-}
+
 ?>
 
 
@@ -71,38 +66,7 @@ if (isset($_SESSION['message'])) {
     <script src="https://kit.fontawesome.com/f0fb58e769.js" crossorigin="anonymous"></script>
     <title>Admin page</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .notification-bar {
-            /* position: fixed;
-            top: 0;
-            width: 100%; */
-            padding: 10px;
-            text-align: center;
-            z-index: 1050;
-            display: none;
-        }
-        .notification-success {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        .notification-error {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-        .close-btn {
-            margin-left: 15px;
-            color: #000;
-            font-weight: bold;
-            float: right;
-            font-size: 20px;
-            line-height: 20px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .close-btn:hover {
-            color: #999;
-        }
-    </style>
+    
 </head>
 <body>
     <header id="header" style="position:sticky;top:0">
@@ -127,14 +91,10 @@ if (isset($_SESSION['message'])) {
     </aside>
 
     <nav style="z-index: 1;">
-        <div id="mySidenav" class="sidenav">
-            <a href="admin.php">Company records</a>
+         <div id="mySidenav" class="sidenav">
             <a href="transport.php">Transport records</a>
             <a href="generate.php">Generate report</a>
-            <a href="insert.php">Insert transport record</a>
-            <a href="patient.php">Create patient record</a>
-            <a href="create_driver.php">Create Driver Record</a>
-            <a href="create_bus.php">Create Bus Record</a>
+            <a href="admin.php">Company records</a>  
             <a href="logout.php">Log Out</a>
         </div>
         <script>
@@ -160,26 +120,18 @@ if (isset($_SESSION['message'])) {
     <main>
         <div id="divideAdmin">
             <div class="divideAdmin2">
-                <ul id="myList">
+               <ul id="myList">
                 <h3>Admin dashboard</h3>
-                    <li><a href="admin.php">Company records</a></li>
                     <li><a href="transport.php">Transport records</a></li>
                     <li><a href="generate.php">Generate report</a></li>
-                    <li><a href="insert.php">Insert transport record</a></li>
-                    <li><a href="patient.php">Create patient record</a></li>
-                    <li><a href="create_driver.php">Create Driver Record</a></li>
-                    <li><a href="create_bus.php">Create Bus Record</a></li>
+                    <li><a href="patient.php">Patient Records</a></li>
+                    <li><a href="admin.php">Company records</a></li>  
                     <li><a href="logout.php">Log Out</a></li>
                 </ul>
             </div> 
             <div class="divideAdmin1">
                 <div id="list" style="background-color: #fff;">
-                <?php if (!empty($message)): ?>
-        <div id="notificationBar" class="notification-bar notification-<?php echo $messageType; ?>">
-            <?php echo $message; ?>
-            <span class="close-btn" onclick="closeNotification()">&times;</span>
-        </div>
-    <?php endif; ?>
+                
     
                     <h2>Create Bus Record</h2> 
                     <p>Enter Bus details</p>
@@ -197,23 +149,7 @@ if (isset($_SESSION['message'])) {
         <p>© Business All Rights Reserved.</p> 
     </footer>
 
-    <script>
-        function closeNotification() {
-            var notificationBar = document.getElementById("notificationBar");
-            notificationBar.style.display = "none";
-        }
 
-        // Automatically show and dismiss the notification bar after 5 seconds
-        window.onload = function() {
-            var notificationBar = document.getElementById("notificationBar");
-            if (notificationBar) {
-                notificationBar.style.display = "block";
-                setTimeout(function() {
-                    notificationBar.style.display = "none";
-                }, 5000);
-            }
-        }
-    </script>
  <script src="script.js"></script>
 </body>
 </html>
